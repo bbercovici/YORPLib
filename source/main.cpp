@@ -11,6 +11,7 @@
 #include "SRPModel.h"
 
 #include <chrono>
+using namespace std;
 
 int main(int argc, const char * argv[])
 {
