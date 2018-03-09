@@ -80,6 +80,9 @@ int main(int argc, const char * argv[])
     
     // Fourth line contains lambdaDel
     getline(inFile, linestr);
+    std::cout << linestr << std::endl;
+    std::cout << stod(linestr) << std::endl;
+    
     lambdaDel = stod(linestr);
     
     // Fifth line contains deltaDel
