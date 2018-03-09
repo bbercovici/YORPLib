@@ -1,4 +1,4 @@
-/Users/bbercovici/GDrive/CUBoulder/Research/code/SBGAT/resources/shape_models/itokawa_16.obj
+../ASPEN_GUI_LESS/resources/shape_models/
 40
 0.05 0.0
 1.0
