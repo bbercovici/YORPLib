@@ -125,7 +125,6 @@ int main(int argc, const char * argv[])
     // Fill out Voxel Grid
     targetObj.setVoxelGrid(xmax, ymax, zmax, numVox);
     
-    
     // Compute and print SRP Fourier coefficients
     SRPModel targetSRP(lambdaDel, deltaDel, MaxFourier, &targetObj, howManyBounces, numrefine);
     targetSRP.writeSRPCoeffsFile(outputFileBaseName, 2*(90.0/deltaDel) + 1);

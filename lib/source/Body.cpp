@@ -65,7 +65,7 @@ Body::Body(string bodyFile, double rho, double spec)
         }
     }
     inFile.close();
-        
+
     // Call other member functions to fill out the rest of the object
     facetData.resize(numFacets);
 
@@ -80,6 +80,47 @@ Body::Body(string bodyFile, double rho, double spec)
     setF2V();
 
 }
+
+
+Body::Body(std::vector<std::vector<double > > vertices, 
+    std::vector<std::vector<int> > facets, double rho, double spec){
+   
+    numFacets = facets.size();
+    numVerts = vertices.size();
+
+
+    for (int i = 0; i < vertices.size(); ++i){
+        this -> vertices.push_back(vertices[i][0]);
+        this -> vertices.push_back(vertices[i][1]);
+        this -> vertices.push_back(vertices[i][2]);
+    }
+
+    for (int i = 0; i < facets.size(); ++i){
+        this -> facetList.push_back(facets[i][0]);
+        this -> facetList.push_back(facets[i][1]);
+        this -> facetList.push_back(facets[i][2]);
+    }
+    
+
+    // Call other member functions to fill out the rest of the object
+    facetData.resize(numFacets);
+
+    setFacets(rho, spec);
+    neighbors.resize(3*numFacets);
+
+    setNeighbors();
+    inView.resize(numFacets);
+
+    setView();
+    f2vlist.resize(numVerts);
+    setF2V();
+
+}
+
+
+
+
+
 
 Body::Body(string bodyFile)
 {

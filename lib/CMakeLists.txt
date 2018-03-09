@@ -1,9 +1,7 @@
 # @file   CMakeLists.txt
 # @Author Benjamin Bercovici (bebe0705@colorado.edu)
-# @date   January, 2017
-# @brief  CMake listing enabling compilation of Jay's YORP code
-
-
+# @date   March, 2018
+# @brief  CMake listing enabling compilation and installation of the YORPLib library
 
 ################################################################################
 #
@@ -13,15 +11,12 @@
 #
 ################################################################################
 
+
 # OMP-friendly GCC Major version (will only be used on Mac OS systems)
 set (OMP_FRIENDLY_GCC_MAJOR_VERSION 7)
 
 # Path to OMP-Friendly GCC Compiler (will only be used on Mac OS systems)
 set (OMP_FRIENDLY_GCC_PATH /usr/local/Cellar/gcc/7.2.0/bin/)
-
-
-# Path to VTKConfig.cmake (not mandatory if VTK is installed at a standard location)
-set (VTK_PATH /usr/local/VTK-8.1.0/lib/cmake/vtk-8.1)
 
 ################################################################################
 #
@@ -35,9 +30,7 @@ set (VTK_PATH /usr/local/VTK-8.1.0/lib/cmake/vtk-8.1)
 
 if (EXISTS /home/bebe0705/.am_fortuna)
 	set(IS_FORTUNA ON)
-	set(RBK_LOC "/home/bebe0705/libs/local/lib/cmake/RigidBodyKinematics")
-	# set(SBGAT_LOC "/home/bebe0705/libs/local/lib/cmake/SbgatCore")
-	set(ASPEN_LOC "/home/bebe0705/libs/local/lib/cmake/ASPEN")
+	message("-- This is Fortuna")
 
 else()
 	set(IS_FORTUNA OFF)
@@ -46,9 +39,10 @@ else()
 endif()
 
 
+
 # Building procedure
 get_filename_component(dirName ${CMAKE_CURRENT_SOURCE_DIR} NAME)
-set(EXE_NAME ${dirName} CACHE STRING "Name of executable to be created.")
+set(LIB_NAME ${dirName} CACHE STRING "Name of executable to be created.")
 
 
 if (${IS_FORTUNA})
@@ -71,7 +65,7 @@ else()
 	endif()
 endif()
 
-project(${EXE_NAME})
+project(${LIB_NAME})
 
 # Specify the version used
 if (${CMAKE_MAJOR_VERSION} LESS 3)
@@ -81,11 +75,13 @@ endif()
 cmake_minimum_required(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}.0)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/source/cmake)
 
-
+# Compiler flags
 add_definitions(-Wall -O2 )
 
-# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+# Enable C++17 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 
+# Include directories
 include_directories(include)
 
 # Find OpenMP
@@ -93,14 +89,32 @@ find_package(OpenMP REQUIRED)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 
-
 # Add source files in root directory
-add_executable(${EXE_NAME}
+add_library(${LIB_NAME} 
+SHARED
 source/Body.cpp
 source/Facet.cpp
 source/FCoeffs.cpp
-source/main.cpp
 source/Shadow.cpp
 source/SRPModel.cpp
 source/VoxelGrid.cpp
 )
+
+# Installing
+if (NOT ${IS_FORTUNA})
+	install (TARGETS ${LIB_NAME} DESTINATION /usr/local/lib/)
+	install (FILES ${PROJECT_SOURCE_DIR}/YORPLibConfig.cmake DESTINATION /usr/local/lib/cmake/YORPLib/)
+	install (DIRECTORY ${PROJECT_SOURCE_DIR}/include/ DESTINATION /usr/local/include/YORPLib FILES_MATCHING PATTERN "*.h")
+else()
+	install (TARGETS ${LIB_NAME} DESTINATION /home/bebe0705/libs/local/lib)
+	install (FILES ${PROJECT_SOURCE_DIR}/YORPLibConfig.cmake DESTINATION /home/bebe0705/libs/local/lib/cmake/YORPLib/)
+	install (DIRECTORY ${PROJECT_SOURCE_DIR}/include/ DESTINATION /home/bebe0705/libs/local/include/YORPLib FILES_MATCHING PATTERN "*.h")
+endif()
+
+
+
+
+
+
+
+

@@ -23,6 +23,12 @@ public:
     Body();
     Body(string bodyFile);
     Body(string bodyFile, double rho, double spec);
+
+    // Added by Benjamin Bercovici
+    Body(std::vector<std::vector<double > > vertices, 
+        std::vector<std::vector<int> > facets, 
+        double rho, double spec);
+
     Body(string bodyFile, string optFile);
     int getNumFacets();
     int getNumVerts();
