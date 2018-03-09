@@ -14,8 +14,8 @@ SRPModel::SRPModel()
     return;
 }
 
-SRPModel::SRPModel(double lambdaDel, double deltaDel, int MaxFourier, Body* bodyExist, int bounces, int numRefine)
-{
+SRPModel::SRPModel(double lambdaDel, double deltaDel, int MaxFourier, Body* bodyExist, int bounces, int numRefine){
+
     // Assign body info
     Spacecraft = *bodyExist;
     
@@ -87,10 +87,10 @@ SRPModel::SRPModel(double lambdaDel, double deltaDel, int MaxFourier, Body* body
     shadowing.resize(lsnum);
     shadowBoundsLow.resize(numf);
     shadowBoundsHigh.resize(numf);
+
     for (ii=0; ii<dsnum; ii++) {
         
         cout << "ds = " << deltaSunList[ii] << "\n";
-        
         // Compute shadowing information for this delta_s
         #pragma omp parallel for
         for (jj=0; jj<lsnum; ++jj) {
@@ -105,6 +105,7 @@ SRPModel::SRPModel(double lambdaDel, double deltaDel, int MaxFourier, Body* body
         Coefficients[ii] = Frow;
         #pragma omp parallel for
         for (jj=0; jj<FourierOrder; ++jj) {
+
             Coefficients[ii][jj].setOrder(jj);
             Coefficients[ii][jj].computeCoeffs(deltaSunList[ii], &Spacecraft, &shadowBoundsLow, &shadowBoundsHigh, lambdaDel/pow(2,numShadRefine), numBounces, &fMult, &tMult, &latSpec, &longSpec, &fSpec, &tSpec);
         }

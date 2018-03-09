@@ -82,10 +82,7 @@ int main(int argc, const char * argv[])
     getline(inFile, linestr);
 
     lambdaDel = stod(linestr);
-
-    std::cout << stod(linestr) << std::endl;
-
-    
+ 
     // Fifth line contains deltaDel
     getline(inFile, linestr);
     deltaDel = stod(linestr);
