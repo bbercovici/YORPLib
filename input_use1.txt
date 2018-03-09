@@ -1,0 +1,9 @@
+/Users/bbercovici/GDrive/CUBoulder/Research/code/SBGAT/resources/shape_models/itokawa_16.obj
+40
+0.05 0.0
+1.0
+1.0
+2
+3
+5
+itokawa
