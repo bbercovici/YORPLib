@@ -42,7 +42,7 @@ endif()
 
 # Building procedure
 get_filename_component(dirName ${CMAKE_CURRENT_SOURCE_DIR} NAME)
-set(LIB_NAME ${dirName} CACHE STRING "Name of executable to be created.")
+set(LIB_NAME YORPLIB)
 
 
 if (${IS_FORTUNA})

@@ -9,8 +9,7 @@
 #include "SRPModel.h"
 #include <math.h>
 
-SRPModel::SRPModel()
-{
+SRPModel::SRPModel(){
     return;
 }
 
@@ -53,7 +52,7 @@ SRPModel::SRPModel(double lambdaDel, double deltaDel, int MaxFourier, Body* body
     if (lambdaSunList.back() != 2.0*M_PI) {
 //        lambdaSunList.back() = 2.0*M_PI;
         lambdaDel = 360.0/((double)lsnum -1.0);
-        cout << "lambdaDel adjusted to " << lambdaDel << "deg\n";
+
         lambdaDel = lambdaDel*M_PI/180.0;
         for (ii=0; ii < lsnum; ii++) {
             lambdaSunList[ii] = ii*lambdaDel;
@@ -90,7 +89,6 @@ SRPModel::SRPModel(double lambdaDel, double deltaDel, int MaxFourier, Body* body
 
     for (ii=0; ii<dsnum; ii++) {
         
-        cout << "ds = " << deltaSunList[ii] << "\n";
         // Compute shadowing information for this delta_s
         #pragma omp parallel for
         for (jj=0; jj<lsnum; ++jj) {
@@ -162,24 +160,24 @@ void SRPModel::writeSRPCoeffs(int deltaWrite)
     double* Ap;
     double* Bp;
     
-    cout << deltaSunList[deltaWrite]*180.0/M_PI << " ";
+    // cout << deltaSunList[deltaWrite]*180.0/M_PI << " ";
     Ap = Coefficients[deltaWrite][0].getA();
-    cout << *Ap << " " << *(Ap+1) << " " << *(Ap+2) << " ";
+    // cout << *Ap << " " << *(Ap+1) << " " << *(Ap+2) << " ";
     for (ii=1; ii<FourierOrder; ii++) {
         Ap = Coefficients[deltaWrite][ii].getA();
         Bp = Coefficients[deltaWrite][ii].getB();
-        cout << *Ap << " " << *(Ap+1) << " " << *(Ap+2) << " ";
-        cout << *Bp << " " << *(Bp+1) << " " << *(Bp+2) << " ";
+        // cout << *Ap << " " << *(Ap+1) << " " << *(Ap+2) << " ";
+        // cout << *Bp << " " << *(Bp+1) << " " << *(Bp+2) << " ";
     }
-    cout << "\n";
+    // cout << "\n";
     
     return;
 }
 
 void SRPModel::writeSRPCoeffsFile(string outputFileBaseName, int numDelta)
 {
-    string FfileName = "F_" + outputFileBaseName;
-    string MfileName = "M_" + outputFileBaseName;
+    string FfileName = outputFileBaseName + "/F.txt" ;
+    string MfileName = outputFileBaseName + "/M.txt" ;
     
     ofstream Ffile(FfileName, std::ofstream::out);
     ofstream Mfile(MfileName, std::ofstream::out);

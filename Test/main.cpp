@@ -8,7 +8,7 @@
 
 #include <sstream>
 
-#include "SRPModel.h"
+#include <SRPModel.h>
 
 #include <chrono>
 using namespace std;

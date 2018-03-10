@@ -36,12 +36,13 @@ Facet::Facet(int* verts, vector<double>* vertices, double rhoSet, double sSet)
     double* v1;
     double* v2;
     double* v3;
-    std::cout << "before computeGeometry" << std::endl;
-
-
-    std::cout << verts[0] << " " << verts[1] <<" "<< verts[2] << std::endl;
     
-    std::cout << vert_nums[0] << " " << vert_nums[1] <<" "<< vert_nums[2] << std::endl;
+    // std::cout << "before computeGeometry" << std::endl;
+
+
+    // std::cout << verts[0] << " " << verts[1] <<" "<< verts[2] << std::endl;
+    
+    // std::cout << vert_nums[0] << " " << vert_nums[1] <<" "<< vert_nums[2] << std::endl;
 
 
 
@@ -49,7 +50,7 @@ Facet::Facet(int* verts, vector<double>* vertices, double rhoSet, double sSet)
     v2 = &vertices->at(vert_nums[1]);
     v3 = &vertices->at(vert_nums[2]);
 
-    std::cout << "computeGeometry" << std::endl;
+    // std::cout << "computeGeometry" << std::endl;
     // Call member functions to fill remaining values
     computeGeometry(&v1[0], &v2[0], &v3[0], &normal[0], &r_c[0], &area);
     

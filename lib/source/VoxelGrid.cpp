@@ -18,8 +18,7 @@ VoxelGrid::VoxelGrid()
     VoxelGrid(1.0,1.0,1.0,1);
 }
 
-VoxelGrid::VoxelGrid(double xmax_in, double ymax_in, double zmax_in, int N_in)
-{
+VoxelGrid::VoxelGrid(double xmax_in, double ymax_in, double zmax_in, int N_in){
     N = N_in;
     dx = 2.0*xmax_in/(double)N;
     dy = 2.0*ymax_in/(double)N;

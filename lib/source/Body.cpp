@@ -17,9 +17,8 @@
 
 using namespace std;
 
-Body::Body()
-{
-    cerr << "Need inputs to define Body\n"; // change this to throw an error
+Body::Body(){
+    // cerr << "Need inputs to define Body\n"; // change this to throw an error
     
     return;
 }
@@ -96,9 +95,9 @@ Body::Body(std::vector<std::vector<double > > vertices,
     }
 
     for (int i = 0; i < facets.size(); ++i){
-        this -> facetList.push_back(facets[i][0]);
-        this -> facetList.push_back(facets[i][1]);
-        this -> facetList.push_back(facets[i][2]);
+        this -> facetList.push_back(facets[i][0] + 1);
+        this -> facetList.push_back(facets[i][1] + 1);
+        this -> facetList.push_back(facets[i][2] + 1);
     }
     
 
@@ -154,6 +153,7 @@ Body::Body(string bodyFile)
                 facetList.push_back(stoi(elems[1]));
                 facetList.push_back(stoi(elems[2]));
                 facetList.push_back(stoi(elems[3]));
+                std::cout << facetList[numFacets - 3] << " " << facetList[numFacets - 2] << " " << facetList[numFacets - 1] << std::endl; 
                 numFacets++;
             }
             elems.clear();
@@ -286,13 +286,9 @@ void Body::setFacets(double rho, double s)
     int ii;
     int verts[3];
 
-    std::cout << numFacets << std::endl;
-    std::cout << facetList.size() << std::endl;
-    std::cout << facetData.size() << std::endl;
-
+    
     
     for (ii=0; ii<numFacets; ii++) {
-        std::cout << ii << std::endl;
         verts[0] = facetList[3*ii];
         verts[1] = facetList[3*ii + 1];
         verts[2] = facetList[3*ii + 2];
@@ -408,7 +404,6 @@ void Body::setView()
         
     }
     
-    cout << "Beat the inView memory error";
     
 //    for (ii=0; ii<numFacets; ii++){
 //        inView[ii]->shrink_to_fit();
