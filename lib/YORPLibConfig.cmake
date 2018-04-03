@@ -8,7 +8,7 @@ endif()
 
 
 if(${IS_FORTUNA})
-	set(YORPLIB_INCLUDE_HEADER /home/bebe0705/libs/local/include/YORPLIB/)
+	set(YORPLIB_INCLUDE_HEADER /home/bebe0705/libs/local/include/YORPLib/)
 	set(YORPLIB_LIBRARY /home/bebe0705/libs/local/lib/libYORPLIB.so)
 
 else()
