@@ -1,0 +1,9 @@
+../../../ASPEN_GUI_LESS/resources/shape_models/cube.obj
+40
+0.05 0.0
+1.0
+1.0
+2
+3
+5
+./

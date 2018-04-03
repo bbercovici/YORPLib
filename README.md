@@ -11,6 +11,7 @@ OpenMP complier compilers enable faster performance.
 2. `make`
 3. `make install`
 
+An example program is provided 
 
 ## Credits
 

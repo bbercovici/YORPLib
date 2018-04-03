@@ -12,7 +12,7 @@ if(${IS_FORTUNA})
 	set(YORPLIB_LIBRARY /home/bebe0705/libs/local/lib/libYORPLIB.so)
 
 else()
-	set(YORPLIB_INCLUDE_HEADER /usr/local/include/YORPLIB/)
+	set(YORPLIB_INCLUDE_HEADER /usr/local/include/YORPLib/)
 
 	if (APPLE)
 		set(YORPLIB_LIBRARY /usr/local/lib/libYORPLIB.dylib)
