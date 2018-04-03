@@ -42,7 +42,7 @@ endif()
 
 # Building procedure
 get_filename_component(dirName ${CMAKE_CURRENT_SOURCE_DIR} NAME)
-set(LIB_NAME YORPLIB)
+set(LIB_NAME YORPLib)
 
 
 if (${IS_FORTUNA})
