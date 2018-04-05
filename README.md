@@ -18,3 +18,7 @@ An example program is provided
 * Originally created by Jay McMahon on 5/19/14 
 * Adapted by Benjamin Bercovici on 03/10/2018
 * Copyright (c) 2014 Jay McMahon. All rights reserved.
+
+## License
+
+[This software is distributed under the MIT License](https://choosealicense.com/licenses/mit/)
