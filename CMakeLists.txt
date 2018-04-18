@@ -130,7 +130,7 @@ add_library(${LIB_NAME}
 if(NOT BREW)
 	if (NOT ${IS_FORTUNA})
 		install (TARGETS ${LIB_NAME} DESTINATION /usr/local/lib/)
-		install (FILES ${PROJECT_SOURCE_DIR}/YORPLibConfig.cmake DESTINATION /usr/local/lib/cmake/YORPLib/)
+		install (FILES ${PROJECT_SOURCE_DIR}/${LIB_NAME} DESTINATION /usr/local/share)
 		install (DIRECTORY ${PROJECT_SOURCE_DIR}/include/ DESTINATION /usr/local/include/YORPLib FILES_MATCHING PATTERN "*.h")
 	else()
 		install (TARGETS ${LIB_NAME} DESTINATION /home/bebe0705/libs/local/lib)
