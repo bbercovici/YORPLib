@@ -2,16 +2,44 @@
 
 A library of functions enabling one to compute the coefficients of the Fourier decomposition of the force, torque induced by solar insulation over a polyhedral surface.
 
-OpenMP complier compilers enable faster performance.
+OpenMP-compliant compilers enable faster performance.
 
-## Usage
+## Installation: 
+
+### Mac users
+
+YORPLib can be retrieved from Homebrew:
+
+<pre>
+brew tap bbercovici/YORPLib
+brew update
+brew install YORPLib
+</pre>
+### Linux & Mac users
 
 1. Clone or download this repository 
-2. `cd lib/build`
 2. `make`
 3. `make install`
 
-An example program is provided 
+## Getting updates
+
+### Mac users
+
+Assuming that YORPLib was installed with Homebrew
+
+<pre>
+brew update
+brew upgrade YORPLib
+</pre>
+
+### Linux & Mac users
+
+Assuming you have cloned this repository and did not apply any local changes to the library, cd to the corresponding folder
+and type
+1. `git pull`
+2. `make`
+3. `make install`
+
 
 ## Credits
 
