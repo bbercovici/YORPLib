@@ -41,7 +41,7 @@
 set (OMP_FRIENDLY_GCC_MAJOR_VERSION 7)
 
 # Path to OMP-Friendly GCC Compiler (will only be used on Mac OS systems)
-set (OMP_FRIENDLY_GCC_PATH /usr/local/Cellar/gcc/7.2.0/bin/)
+set (OMP_FRIENDLY_GCC_PATH /usr/local/Cellar/gcc/7.3.0_1/bin/)
 
 ################################################################################
 #
@@ -68,7 +68,7 @@ if(APPLE)
 
 	else()
 		# no OMP-compliant compiler was found on this mac. 
-		message(FATAL_ERROR "No OMP-compliant compiler was found on this Mac.")
+		message("No OMP-compliant compiler was found on this Mac.")
 	endif()
 else() 
 	# Running on Linux. Will switch back to compiler in /usr/local/bin
