@@ -32,121 +32,122 @@ SOFTWARE.
 
 #include "SRPModel.h"
 #include <math.h>
+namespace YORPLib{
 
-SRPModel::SRPModel(){
-    return;
-}
+    SRPModel::SRPModel(){
+        return;
+    }
 
-SRPModel::SRPModel(double lambdaDel, double deltaDel, int MaxFourier, Body* bodyExist, int bounces, int numRefine){
+    SRPModel::SRPModel(double lambdaDel, double deltaDel, int MaxFourier, Body* bodyExist, int bounces, int numRefine){
 
     // Assign body info
-    Spacecraft = *bodyExist;
-    
+        Spacecraft = *bodyExist;
+        
     // Assign max order for Fourier coefficient
-    FourierOrder = MaxFourier;
-    
+        FourierOrder = MaxFourier;
+        
     // Assign number of bounces
-    numBounces = bounces;
-    
+        numBounces = bounces;
+        
     // Assign how many refinement steps to take
-    numShadRefine = numRefine;
-    
+        numShadRefine = numRefine;
+        
     // Set delta_s and lambda_s lists
-    int ii, jj;
-    int dsnum = 180/deltaDel + 1;
-    int lsnum = 360/lambdaDel + 1;
-    deltaSunList.resize(dsnum);
-    lambdaSunList.resize(lsnum);
-    riseLambda.resize(dsnum);
-    setLambda.resize(dsnum);
-    
-    for (ii=0; ii<dsnum; ii++) {
-        deltaSunList[ii] = M_PI_2 - ii*deltaDel*M_PI/180.0;
-    }
+        int ii, jj;
+        int dsnum = 180/deltaDel + 1;
+        int lsnum = 360/lambdaDel + 1;
+        deltaSunList.resize(dsnum);
+        lambdaSunList.resize(lsnum);
+        riseLambda.resize(dsnum);
+        setLambda.resize(dsnum);
+        
+        for (ii=0; ii<dsnum; ii++) {
+            deltaSunList[ii] = M_PI_2 - ii*deltaDel*M_PI/180.0;
+        }
     // If deltaDel wasn't a perfect divisor of 180, will make the last entry off - correct it here
-    if (deltaSunList.back() != -1.0*M_PI_2) {
-        deltaSunList.back() = -1.0*M_PI_2;
-    }
-    
-    lambdaDel = lambdaDel*M_PI/180.0;
-    for (ii=0; ii < lsnum; ii++) {
-        lambdaSunList[ii] = ii*lambdaDel;
-    }
-    // If lambdaDel wasn't a perfect divisor of 360, will make the last entry off - correct it here by adjusting lambdaDel to perfectly divide 360 by the same number of divisions as before
-    if (lambdaSunList.back() != 2.0*M_PI) {
-//        lambdaSunList.back() = 2.0*M_PI;
-        lambdaDel = 360.0/((double)lsnum -1.0);
-
+        if (deltaSunList.back() != -1.0*M_PI_2) {
+            deltaSunList.back() = -1.0*M_PI_2;
+        }
+        
         lambdaDel = lambdaDel*M_PI/180.0;
         for (ii=0; ii < lsnum; ii++) {
             lambdaSunList[ii] = ii*lambdaDel;
         }
-    }
-    
-    // Fill out the rise/set information
-    int numf = Spacecraft.getNumFacets();
-    vector<double> row(numf);
-    
-    for (ii=0; ii<dsnum; ii++) {
-        riseLambda[ii] = row;
-        setLambda[ii] = row;
-        for (jj=0; jj<numf; jj++) {
-            computeRiseSet(Spacecraft.getFacetNormal(jj), deltaSunList[ii], &riseLambda[ii][jj], &setLambda[ii][jj]);
+    // If lambdaDel wasn't a perfect divisor of 360, will make the last entry off - correct it here by adjusting lambdaDel to perfectly divide 360 by the same number of divisions as before
+        if (lambdaSunList.back() != 2.0*M_PI) {
+//        lambdaSunList.back() = 2.0*M_PI;
+            lambdaDel = 360.0/((double)lsnum -1.0);
+
+            lambdaDel = lambdaDel*M_PI/180.0;
+            for (ii=0; ii < lsnum; ii++) {
+                lambdaSunList[ii] = ii*lambdaDel;
+            }
         }
-    }
-    
+        
+    // Fill out the rise/set information
+        int numf = Spacecraft.getNumFacets();
+        vector<double> row(numf);
+        
+        for (ii=0; ii<dsnum; ii++) {
+            riseLambda[ii] = row;
+            setLambda[ii] = row;
+            for (jj=0; jj<numf; jj++) {
+                computeRiseSet(Spacecraft.getFacetNormal(jj), deltaSunList[ii], &riseLambda[ii][jj], &setLambda[ii][jj]);
+            }
+        }
+        
     // Compute effect of secondary bounces
-    if (numBounces > 0) {
-        Spacecraft.setViewRc();
-        computeMulti();
+        if (numBounces > 0) {
+            Spacecraft.setViewRc();
+            computeMulti();
         // Specular reflections
         // if flag is set? or always
-        specularMulti(dsnum, lsnum);
-    }
-    
-    // Create coefficients array and fill
-    vector<FCoeffs> Frow(FourierOrder);
-    Coefficients.resize(dsnum);
-    shadowing.resize(lsnum);
-    shadowBoundsLow.resize(numf);
-    shadowBoundsHigh.resize(numf);
-
-    for (ii=0; ii<dsnum; ii++) {
+            specularMulti(dsnum, lsnum);
+        }
         
+    // Create coefficients array and fill
+        vector<FCoeffs> Frow(FourierOrder);
+        Coefficients.resize(dsnum);
+        shadowing.resize(lsnum);
+        shadowBoundsLow.resize(numf);
+        shadowBoundsHigh.resize(numf);
+
+        for (ii=0; ii<dsnum; ii++) {
+            
         // Compute shadowing information for this delta_s
         #pragma omp parallel for
-        for (jj=0; jj<lsnum; ++jj) {
-            Shadow initShad(numf, deltaSunList[ii], lambdaSunList[jj]);
-            shadowing[jj] = initShad;
-            shadowing[jj].ComputeShadowing(&Spacecraft, &riseLambda[ii], &setLambda[ii]);
-        }
-        
+            for (jj=0; jj<lsnum; ++jj) {
+                Shadow initShad(numf, deltaSunList[ii], lambdaSunList[jj]);
+                shadowing[jj] = initShad;
+                shadowing[jj].ComputeShadowing(&Spacecraft, &riseLambda[ii], &setLambda[ii]);
+            }
+            
         // Compute shadowing bounds and refine if desired
-        computeShadowBounds(ii, numf, lsnum, lambdaDel);
-        
-        Coefficients[ii] = Frow;
+            computeShadowBounds(ii, numf, lsnum, lambdaDel);
+            
+            Coefficients[ii] = Frow;
         #pragma omp parallel for
-        for (jj=0; jj<FourierOrder; ++jj) {
+            for (jj=0; jj<FourierOrder; ++jj) {
 
-            Coefficients[ii][jj].setOrder(jj);
-            Coefficients[ii][jj].computeCoeffs(deltaSunList[ii], &Spacecraft, &shadowBoundsLow, &shadowBoundsHigh, lambdaDel/pow(2,numShadRefine), numBounces, &fMult, &tMult, &latSpec, &longSpec, &fSpec, &tSpec);
+                Coefficients[ii][jj].setOrder(jj);
+                Coefficients[ii][jj].computeCoeffs(deltaSunList[ii], &Spacecraft, &shadowBoundsLow, &shadowBoundsHigh, lambdaDel/pow(2,numShadRefine), numBounces, &fMult, &tMult, &latSpec, &longSpec, &fSpec, &tSpec);
+            }
         }
+        
     }
-    
-}
 
-void SRPModel::computeRiseSet(const double* normal, const double latitude, double* rise, double* set)
-{
+    void SRPModel::computeRiseSet(const double* normal, const double latitude, double* rise, double* set)
+    {
     // Originally programmed by Dan Scheeres
     // Jay changed so the second input is latitude instead of zenith, and so the
     // output is modded by 2pi.
     // If facet is never illuminated, both entries = 10
-    
-    double zenith, czs, szs, czo, szo, nLong, arg, dellon;
-    
+        
+        double zenith, czs, szs, czo, szo, nLong, arg, dellon;
+        
     // Input is latitude [-PI/2 PI/2], zenith is needed [0 PI] measured from North Pole
-    zenith = M_PI_2 - latitude;
-    
+        zenith = M_PI_2 - latitude;
+        
     czs = cos(zenith);  // Zb-component of uhat
     szs = sin(zenith);  // Xb/Yb-component of uhat
     
@@ -600,7 +601,7 @@ void SRPModel::specularMulti(const int dsnum, const int lsnum)
                         ftemp[kk] = 0.0;
                         ttemp[kk] = 0.0;
                     }
-            
+                    
                     bounce = 1;
                     scale_light = tempF.getRho() * tempF.getS();
                     rc1 = Spacecraft.getFacetRc(currF);
@@ -865,4 +866,5 @@ void SRPModel::computeShadowBounds(const int dsindex, const int numf, const int 
             }
         }
     }
+}
 }

@@ -41,19 +41,21 @@ SOFTWARE.
 
 using namespace std;
 
-Body::Body(){
-    // cerr << "Need inputs to define Body\n"; // change this to throw an error
-    
-    return;
-}
+namespace YORPLib{
 
-Body::Body(string bodyFile, double rho, double spec)
-{
-    ifstream inFile ( bodyFile );
-    numFacets = 0;
-    numVerts = 0;
-    
-    if ( !inFile.is_open() ) {
+    Body::Body(){
+    // cerr << "Need inputs to define Body\n"; // change this to throw an error
+        
+        return;
+    }
+
+    Body::Body(string bodyFile, double rho, double spec)
+    {
+        ifstream inFile ( bodyFile );
+        numFacets = 0;
+        numVerts = 0;
+        
+        if ( !inFile.is_open() ) {
         // The file could not be opened
         cerr << "Requested body file doesn't exist\n"; // change this to throw an error
     }
@@ -734,4 +736,5 @@ double Body::getMaxDim(int axis)
     
     return *max_element(data.begin(), data.end());
     
+}
 }

@@ -32,30 +32,31 @@ SOFTWARE.
 
 #include "Shadow.h"
 #include <math.h>
+namespace YORPLib{
 
-Shadow::Shadow()
-{
-    
-}
+    Shadow::Shadow()
+    {
+        
+    }
 
-Shadow::Shadow(int numfacets, double delta, double lambda)
-{
-    deltaSun = delta;
-    lambdaSun = lambda;
-    
-    percentUnShadowed.resize(numfacets);
-}
+    Shadow::Shadow(int numfacets, double delta, double lambda)
+    {
+        deltaSun = delta;
+        lambdaSun = lambda;
+        
+        percentUnShadowed.resize(numfacets);
+    }
 
-void Shadow::ComputeShadowing(Body* Target, vector<double>* riseLam, vector<double>* setLam)
-{
+    void Shadow::ComputeShadowing(Body* Target, vector<double>* riseLam, vector<double>* setLam)
+    {
     // this is where we can use the inView information to simplify what facets to look through when testing to see if shadowed... will have to do comparison tests to see if it makes a significant difference (voxels might be fast enough)
-    
+        
     // to start, just ignore inView and test every case
-    int numf = Target->getNumFacets();
-    int ii, jj;
-    int testHit;
-    vector<int> dummy;
-    
+        int numf = Target->getNumFacets();
+        int ii, jj;
+        int testHit;
+        vector<int> dummy;
+        
     // Define uhat
     double uhat[3], negu[3], pt[3];//, rmag;
     uhat[0] = cos(lambdaSun)*cos(deltaSun);
@@ -165,4 +166,5 @@ double Shadow::dot ( double* a, double* b)
 {
     return a[0]*b[0] + a[1]*b[1] + a[2]*b[2];
     
+}
 }

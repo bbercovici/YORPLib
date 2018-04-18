@@ -39,23 +39,25 @@ SOFTWARE.
 
 using namespace std;
 
-class Facet
-{
-public:
-    Facet();
-    Facet(int* verts, vector<double>* vertices, double rho, double s);
-    void updateRhoS(double rhoSet, double sSet);
-    void computeOptical(); 
-    int getVert(int vnum);
-    double getRho();
-    double getS();
-    double getArea();
-    double* getRc();
-    double* getNormal();
-    double geta2();
-    void getOpticalFourier(double nnOut[3][3], double Ar1Out[3], double Ar2Out[3][3], double Ar3Out[3][3], double Ar1_2Out[3], double Ar2_2Out[3][3], double Ar3_2Out[3][3]);
+namespace YORPLib{
+
+    class Facet
+    {
+    public:
+        Facet();
+        Facet(int* verts, vector<double>* vertices, double rho, double s);
+        void updateRhoS(double rhoSet, double sSet);
+        void computeOptical(); 
+        int getVert(int vnum);
+        double getRho();
+        double getS();
+        double getArea();
+        double* getRc();
+        double* getNormal();
+        double geta2();
+        void getOpticalFourier(double nnOut[3][3], double Ar1Out[3], double Ar2Out[3][3], double Ar3Out[3][3], double Ar1_2Out[3], double Ar2_2Out[3][3], double Ar3_2Out[3][3]);
 //    void getOpticalFourier(double* nnOut, double* Ar1Out, double* Ar2Out, double* Ar3Out, double* Ar1_2Out, double* Ar2_2Out, double* Ar3_2Out);
-private:
+    private:
     int vert_nums[3]; // index number of first element of each vertex (vertex 1 spans indices 0-2 in the vector)
     //double v1[3], v2[3], v3[3];
     double r_c[3];
@@ -77,4 +79,5 @@ private:
     void computeGeometry(double* v1, double* v2, double* v3, double* normal, double* r_c, double* area);
 };
 
+}
 #endif /* defined(__Spacecraft_SRP__Facet__) */
