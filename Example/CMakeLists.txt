@@ -31,23 +31,6 @@
 
 ################################################################################
 #
-# 								User-defined paths
-#						Should be checked for consistency
-#						Before running 'cmake ..' in build dir
-#
-################################################################################
-
-# OMP-friendly GCC Major version (will only be used on Mac OS systems)
-set (OMP_FRIENDLY_GCC_MAJOR_VERSION 7)
-
-# Path to OMP-Friendly GCC Compiler (will only be used on Mac OS systems)
-set (OMP_FRIENDLY_GCC_PATH /usr/local/Cellar/gcc/7.2.0/bin/)
-
-# Path to SbgatCoreConfig.cmake (not used if installed at a standard location)
-set(YORPLIB_LOC "/home/bebe0705/libs/local/lib/cmake/YORPLib")
-
-################################################################################
-#
 #
 # 		The following should normally not require any modification
 # 				Unless new files are added to the build tree
@@ -56,43 +39,14 @@ set(YORPLIB_LOC "/home/bebe0705/libs/local/lib/cmake/YORPLib")
 ################################################################################
 
 
-if (EXISTS /home/bebe0705/.am_fortuna)
-	set(IS_FORTUNA ON)
-	set(RBK_LOC "/home/bebe0705/libs/local/lib/cmake/RigidBodyKinematics")
-	# set(SBGAT_LOC "/home/bebe0705/libs/local/lib/cmake/SbgatCore")
-	set(ASPEN_LOC "/home/bebe0705/libs/local/lib/cmake/ASPEN")
-
-else()
-	set(IS_FORTUNA OFF)
-	message("-- This is not Fortuna")
-
-endif()
-
-
 # Building procedure
 get_filename_component(dirName ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 set(EXE_NAME ${dirName} CACHE STRING "Name of executable to be created.")
 
 
-if (${IS_FORTUNA})
-	set(CMAKE_C_COMPILER "/usr/local/bin/gcc" CACHE STRING "C Compiler" FORCE)
-	set(CMAKE_CXX_COMPILER "/usr/local/bin/g++" CACHE STRING "C++ Compiler" FORCE)
-else()
-	if(APPLE)
-		if(EXISTS ${OMP_FRIENDLY_GCC_PATH}) # Else running on a MAC. Will attempt to switch compiler to get the OMP-friendly GCC 6.3.0_1 from Homebrew
-			message("Switching to OMP-friendly GCC ")
-	    	set(CMAKE_C_COMPILER ${OMP_FRIENDLY_GCC_PATH}gcc-${OMP_FRIENDLY_GCC_MAJOR_VERSION} CACHE STRING "C Compiler" FORCE)
-			set(CMAKE_CXX_COMPILER ${OMP_FRIENDLY_GCC_PATH}g++-${OMP_FRIENDLY_GCC_MAJOR_VERSION} CACHE STRING "C++ Compiler" FORCE)
+set(CMAKE_C_COMPILER "/usr/local/bin/gcc" CACHE STRING "C Compiler" FORCE)
+set(CMAKE_CXX_COMPILER "/usr/local/bin/g++" CACHE STRING "C++ Compiler" FORCE)
 
-		else()# no OMP-compliant compiler was found on this mac. 
-			message(FATAL_ERROR "No OMP-compliant compiler was found on this Mac.")
-		endif()
-	else() # Running on Linux. Will switch back to compiler in /usr/local/bin
-				message("Switching to /usr/local/gcc ")
-		    	set(CMAKE_C_COMPILER "/usr/local/bin/gcc" CACHE STRING "C Compiler" FORCE)
-				set(CMAKE_CXX_COMPILER "/usr/local/bin/g++" CACHE STRING "C++ Compiler" FORCE)
-	endif()
-endif()
 
 project(${EXE_NAME})
 
