@@ -30,7 +30,7 @@ SOFTWARE.
 //  Copyright (c) 2014 Jay McMahon. All rights reserved.
 //
 
-#include "VoxelGrid.h"
+#include "YORPLib/VoxelGrid.h"
 #include <vector>
 #include <algorithm>
 #include <cmath>

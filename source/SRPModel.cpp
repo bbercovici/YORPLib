@@ -30,7 +30,7 @@ SOFTWARE.
 //  Copyright (c) 2014 Jay McMahon. All rights reserved.
 //
 
-#include "SRPModel.h"
+#include "YORPLib/SRPModel.h"
 #include <math.h>
 namespace YORPLib{
 

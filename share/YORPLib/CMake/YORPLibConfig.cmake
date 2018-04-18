@@ -21,7 +21,6 @@
 # SOFTWARE.
 #
 
-
 set(YORPLIB_INCLUDE_HEADER /home/bebe0705/libs/local/include/YORPLib/)
 set(YORPLIB_LIBRARY /home/bebe0705/libs/local/lib/libYORPLib.so)
 
