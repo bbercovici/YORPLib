@@ -30,7 +30,7 @@ SOFTWARE.
 //  Copyright (c) 2014 Jay McMahon. All rights reserved.
 //
 
-#include "Body.h"
+#include "YORPLib/Body.h"
 #include <algorithm>
 #include <vector>
 #include <cmath>

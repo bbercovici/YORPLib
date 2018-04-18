@@ -31,7 +31,7 @@ SOFTWARE.
 //  Copyright (c) 2014 Jay McMahon. All rights reserved.
 //
 
-#include "Facet.h"
+#include "YORPLib/Facet.h"
 #include <math.h>
 #include <iostream>
 

@@ -30,8 +30,8 @@ SOFTWARE.
 //  Copyright (c) 2014 Jay McMahon. All rights reserved.
 //
 
-#include "FCoeffs.h"
-#include "Body.h"
+#include "YORPLib/FCoeffs.h"
+#include "YORPLib/Body.h"
 #include <math.h>
 #include <algorithm>
 
