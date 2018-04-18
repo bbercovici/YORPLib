@@ -106,7 +106,7 @@ int main(int argc, const char * argv[])
     getline(inFile, linestr);
 
     lambdaDel = stod(linestr);
- 
+    
     // Fifth line contains deltaDel
     getline(inFile, linestr);
     deltaDel = stod(linestr);
@@ -130,12 +130,12 @@ int main(int argc, const char * argv[])
     inFile.close();
     
     // Construct the Body object with the appropriate method based on opticalFlag
-    Body targetObj;
+    YORPLib::Body targetObj;
     if (opticalFlag == 0) {
-        Body inputObj(objFileName,rho,spec);
+        YORPLib::Body inputObj(objFileName,rho,spec);
         targetObj = inputObj;
     } else if (opticalFlag == 1) {
-        Body inputObj(objFileName,opticalFileName);
+        YORPLib::Body inputObj(objFileName,opticalFileName);
         targetObj = inputObj;
 
     }
@@ -150,7 +150,7 @@ int main(int argc, const char * argv[])
     targetObj.setVoxelGrid(xmax, ymax, zmax, numVox);
     
     // Compute and print SRP Fourier coefficients
-    SRPModel targetSRP(lambdaDel, deltaDel, MaxFourier, &targetObj, howManyBounces, numrefine);
+    YORPLib::SRPModel targetSRP(lambdaDel, deltaDel, MaxFourier, &targetObj, howManyBounces, numrefine);
     targetSRP.writeSRPCoeffsFile(outputFileBaseName, 2*(90.0/deltaDel) + 1);
     
     // stop timer and report

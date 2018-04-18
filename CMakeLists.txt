@@ -114,7 +114,7 @@ add_library(${LIB_NAME}
 # If ${BREW} is true, installing from homebrew formula
 if(NOT BREW)
 	install (TARGETS ${LIB_NAME} DESTINATION /usr/local/lib/)
-	install (FILES ${PROJECT_SOURCE_DIR}/${LIB_NAME} DESTINATION /usr/local/share)
+	install (DIRECTORY ${PROJECT_SOURCE_DIR}/${LIB_NAME} DESTINATION /usr/local/share)
 	install (DIRECTORY ${PROJECT_SOURCE_DIR}/include/ DESTINATION /usr/local/include/YORPLib FILES_MATCHING PATTERN "*.h")
 endif()
 

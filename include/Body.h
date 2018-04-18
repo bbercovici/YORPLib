@@ -43,47 +43,49 @@ SOFTWARE.
 
 //using namespace std;
 
-class Body
-{
-public:
-    Body();
-    Body(string bodyFile);
-    Body(string bodyFile, double rho, double spec);
+
+namespace YORPLib{
+    class Body
+    {
+    public:
+        Body();
+        Body(string bodyFile);
+        Body(string bodyFile, double rho, double spec);
 
     // Added by Benjamin Bercovici
-    Body(std::vector<std::vector<double > > vertices, 
-        std::vector<std::vector<int> > facets, 
-        double rho, double spec);
+        Body(std::vector<std::vector<double > > vertices, 
+            std::vector<std::vector<int> > facets, 
+            double rho, double spec);
 
-    Body(string bodyFile, string optFile);
-    int getNumFacets();
-    int getNumVerts();
+        Body(string bodyFile, string optFile);
+        int getNumFacets();
+        int getNumVerts();
 //    void getFacetInfo(int fnum, Facet* fac);
-    double* getFacetNormal(int fnum);
-    double* getFacetRc(int fnum);
-    double getFacetArea(int fnum);
-    int* getNeighbors(int fnum);
-    vector<int>* getInView(int fnum);
-    vector<int>* getInViewRc(int fnum);
-    vector<int>* getF2V(int fnum);
-    int getVinVox(int voxnum);
-    int getFinVox(int voxnum);
-    Facet getFacet( int fnum);
-    void setNeighbors();
-    void setView();
-    void setViewRc();
-    void setViewGrid();
-    void setFacets(double rho, double s);
-    void setFacetsVec(vector<double>* rho, vector<double>* s);
-    void setF2V();
-    void setVoxelGrid(double xmax_in, double ymax_in, double zmax_in, int N);
-    int ray_intersection(double* pt, double* uhat, double* hit_pnt, vector<int>* extraFacets);
-    double getMaxDimVoxGrid();
+        double* getFacetNormal(int fnum);
+        double* getFacetRc(int fnum);
+        double getFacetArea(int fnum);
+        int* getNeighbors(int fnum);
+        vector<int>* getInView(int fnum);
+        vector<int>* getInViewRc(int fnum);
+        vector<int>* getF2V(int fnum);
+        int getVinVox(int voxnum);
+        int getFinVox(int voxnum);
+        Facet getFacet( int fnum);
+        void setNeighbors();
+        void setView();
+        void setViewRc();
+        void setViewGrid();
+        void setFacets(double rho, double s);
+        void setFacetsVec(vector<double>* rho, vector<double>* s);
+        void setF2V();
+        void setVoxelGrid(double xmax_in, double ymax_in, double zmax_in, int N);
+        int ray_intersection(double* pt, double* uhat, double* hit_pnt, vector<int>* extraFacets);
+        double getMaxDimVoxGrid();
 //    void getOpticalFourier(int fnum, double& rho, double& s, double& a2, double* nn, double* Ar1, double* Ar2, double* Ar3, double* Ar1_2, double* Ar2_2, double* Ar3_2);
-    void getOpticalFourier(int fnum, double& rho, double& s, double& a2, double nn[3][3], double Ar1[3], double Ar2[3][3], double Ar3[3][3], double Ar1_2[3], double Ar2_2[3][3], double Ar3_2[3][3]);
-    double getMaxDim(int axis);
-private:
-    int numFacets, numVerts;
+        void getOpticalFourier(int fnum, double& rho, double& s, double& a2, double nn[3][3], double Ar1[3], double Ar2[3][3], double Ar3[3][3], double Ar1_2[3], double Ar2_2[3][3], double Ar3_2[3][3]);
+        double getMaxDim(int axis);
+    private:
+        int numFacets, numVerts;
     bool viewCheck; // true if setView has been run, false otherwise
     vector <int> neighbors;
     vector < vector<int>* > inView;
@@ -96,5 +98,6 @@ private:
     VoxelGrid bodyVox;
     double dot ( double* a, double* b);
 };
+}
 
 #endif /* defined(__Spacecraft_SRP__Body__) */

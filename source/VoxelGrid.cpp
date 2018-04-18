@@ -36,62 +36,63 @@ SOFTWARE.
 #include <cmath>
 
 using namespace std;
+namespace YORPLib{
 
-VoxelGrid::VoxelGrid()
-{
-    VoxelGrid(1.0,1.0,1.0,1);
-}
-
-VoxelGrid::VoxelGrid(double xmax_in, double ymax_in, double zmax_in, int N_in){
-    N = N_in;
-    dx = 2.0*xmax_in/(double)N;
-    dy = 2.0*ymax_in/(double)N;
-    dz = 2.0*zmax_in/(double)N;
-    
-    // Resize vectors in class
-    int N3 = N*N*N;
-    int N2 = N*N;
-    xmax.resize(N3);
-    xmin.resize(N3);
-    ymax.resize(N3);
-    ymin.resize(N3);
-    zmax.resize(N3);
-    zmin.resize(N3);
-    posx.resize(N3);
-    negx.resize(N3);
-    posy.resize(N3);
-    negy.resize(N3);
-    posz.resize(N3);
-    negz.resize(N3);
-    
-    flist.resize(N3);
-    vlist.resize(N3);
-    fnum.resize(N3);
-    vnum.resize(N3);
-    
-    vector<int> row;
-    
-    
-    int vox_ind = 0;
-    
-    int ii, jj, kk;
-    
-    for (ii = 0; ii<N; ii++)
+    VoxelGrid::VoxelGrid()
     {
-        for (jj = 0; jj<N; jj++)
+        VoxelGrid(1.0,1.0,1.0,1);
+    }
+
+    VoxelGrid::VoxelGrid(double xmax_in, double ymax_in, double zmax_in, int N_in){
+        N = N_in;
+        dx = 2.0*xmax_in/(double)N;
+        dy = 2.0*ymax_in/(double)N;
+        dz = 2.0*zmax_in/(double)N;
+        
+    // Resize vectors in class
+        int N3 = N*N*N;
+        int N2 = N*N;
+        xmax.resize(N3);
+        xmin.resize(N3);
+        ymax.resize(N3);
+        ymin.resize(N3);
+        zmax.resize(N3);
+        zmin.resize(N3);
+        posx.resize(N3);
+        negx.resize(N3);
+        posy.resize(N3);
+        negy.resize(N3);
+        posz.resize(N3);
+        negz.resize(N3);
+        
+        flist.resize(N3);
+        vlist.resize(N3);
+        fnum.resize(N3);
+        vnum.resize(N3);
+        
+        vector<int> row;
+        
+        
+        int vox_ind = 0;
+        
+        int ii, jj, kk;
+        
+        for (ii = 0; ii<N; ii++)
         {
-            for (kk = 0; kk<N; kk++)
+            for (jj = 0; jj<N; jj++)
             {
-                xmin[vox_ind] = -xmax_in + ((double)kk)*dx;
-                xmax[vox_ind] = -xmax_in + ((double)kk+1.0)*dx;
-                ymin[vox_ind] = -ymax_in + ((double)jj)*dy;
-                ymax[vox_ind] = -ymax_in + ((double)jj+1.0)*dy;
-                zmin[vox_ind] = -zmax_in + ((double)ii)*dz;
-                zmax[vox_ind] = -zmax_in + ((double)ii+1.0)*dz;
-                
+                for (kk = 0; kk<N; kk++)
+                {
+                    xmin[vox_ind] = -xmax_in + ((double)kk)*dx;
+                    xmax[vox_ind] = -xmax_in + ((double)kk+1.0)*dx;
+                    ymin[vox_ind] = -ymax_in + ((double)jj)*dy;
+                    ymax[vox_ind] = -ymax_in + ((double)jj+1.0)*dy;
+                    zmin[vox_ind] = -zmax_in + ((double)ii)*dz;
+                    zmax[vox_ind] = -zmax_in + ((double)ii+1.0)*dz;
+                    
                 // Define voxel X neighbors
-                if (kk==0) {
-                    posx[vox_ind] = vox_ind + 1;
+                    if (kk==0) {
+                        posx[vox_ind] = vox_ind + 1;
                     negx[vox_ind] = N3; // N3 as an index will be out of bounds - indicates no neighbor in that direction
                 } else if (kk==N-1) {
                     posx[vox_ind] = N3;
@@ -161,7 +162,7 @@ void VoxelGrid::fillGrid(vector<int>* facets, vector<double>* vertices, int numV
         v2voxlist[ii] = voxel_list;
         
         for (iter_vl = voxel_list.begin(); iter_vl != voxel_list.end(); ++iter_vl) {
-        
+            
             // add vertex and associated facets to this voxel's list
             vlist[*iter_vl].push_back(ii);
             vnum[*iter_vl]++;
@@ -387,15 +388,15 @@ int VoxelGrid::ray_intersect_voxel(double* pt, double* uhat, vector<int>* facets
         if (t == 0.0) {
             return hit_facet; // returns -1 if no intersection
         }
-    
+        
         // Update pt
         pt[0] = pt[0] + t*uhat[0];
         pt[1] = pt[1] + t*uhat[1];
         pt[2] = pt[2] + t*uhat[2];
-    
+        
         // Check to see if this intersect a voxel now
         find_pt_in_voxel(pt, &voxel_list);
-    
+        
     }
     
     if (voxel_list.size() > 1) {
@@ -437,7 +438,7 @@ int VoxelGrid::ray_intersect_voxel(double* pt, double* uhat, vector<int>* facets
             }
             current_voxel = voxel_list2[0];
         }
-    
+        
     } else {
         current_voxel = voxel_list[0];
     }
@@ -491,12 +492,12 @@ int VoxelGrid::ray_intersect_voxel(double* pt, double* uhat, vector<int>* facets
         // voxel. No need to take the time to call the function
         if (fnum[current_voxel] != 0) {
             hit_facet = test_intersection(pt, uhat, facets, vertices, facetData, hit_pnt, current_voxel, extraFacets);
-    
+            
             if (hit_facet != -1) {
                 return hit_facet;
             }
         }
-    
+        
         // Traverse to next voxel
         if (tMaxX < tMaxY) {
             if (tMaxX < tMaxZ) {
@@ -584,7 +585,7 @@ int VoxelGrid::test_intersection(double* pt, double* uhat, vector<int>* facets, 
         temp1 = dot(&pt_int[0],nhat);
         temp2 = dot(uhat,nhat);
         t = temp1/temp2;
-    
+        
         // Ray is directed; don't travel backwards to an intersection
         if (t >= 0.0) {
             pt_int[0] = pt[0] + t*uhat[0];
@@ -780,4 +781,5 @@ void VoxelGrid::cross(double* a, double* b, double* c)
     c[1] = a[2]*b[0] - a[0]*b[2];
     c[2] = a[0]*b[1] - a[1]*b[0];
     return;
+}
 }

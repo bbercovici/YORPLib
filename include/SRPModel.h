@@ -44,18 +44,19 @@ SOFTWARE.
 //#include "Shadow.h"
 
 //using namespace std;
+namespace YORPLib{
 
-class SRPModel
-{
-public:
-    SRPModel();
-    SRPModel(double lambdaDel, double deltaDel, int MaxFourier, Body* bodyExist, int bounces, int numRefine);
-    void writeSRPCoeffs(int deltaWrite);
-    void writeSRPCoeffsFile(string outputFileBaseName, int numDelta);
-private:
-    Body Spacecraft;
-    vector <double> deltaSunList;
-    vector <double> lambdaSunList;
+    class SRPModel
+    {
+    public:
+        SRPModel();
+        SRPModel(double lambdaDel, double deltaDel, int MaxFourier, Body* bodyExist, int bounces, int numRefine);
+        void writeSRPCoeffs(int deltaWrite);
+        void writeSRPCoeffsFile(string outputFileBaseName, int numDelta);
+    private:
+        Body Spacecraft;
+        vector <double> deltaSunList;
+        vector <double> lambdaSunList;
     int numBounces, numGrid, numShadRefine; // if these are 0, then not using this logic (do this to start)
     int FourierOrder;
     vector <Shadow> shadowing; // first index corresponds to lambda_s, each shadow has the value for all facets
@@ -90,5 +91,6 @@ private:
         Is_2{k} = zeros(3);
       end */
 };
+}
 
 #endif /* defined(__Spacecraft_SRP__SRPModel__) */
