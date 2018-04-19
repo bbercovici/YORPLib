@@ -83,7 +83,7 @@ add_library(${LIB_NAME}
 if(NOT BREW)
 	install (TARGETS ${LIB_NAME} DESTINATION /usr/local/lib/)
 	install (DIRECTORY ${PROJECT_SOURCE_DIR}/share/${LIB_NAME} DESTINATION /usr/local/share)
-	install (DIRECTORY ${PROJECT_SOURCE_DIR}/include/YORPLib DESTINATION /usr/local/include/YORPLib FILES_MATCHING PATTERN "*.h")
+	install (DIRECTORY ${PROJECT_SOURCE_DIR}/include/YORPLib DESTINATION /usr/local/include/ FILES_MATCHING PATTERN "*.h")
 endif()
 
 
