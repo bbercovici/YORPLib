@@ -4,8 +4,8 @@ A library of functions enabling one to compute the coefficients of the Fourier d
 
 OpenMP-compliant compilers enable faster performance. If GCC has been downloaded from Homebrew, OpenMP can be enabled like so:
 
-- `brew install yorplib --with-gcc` if using homebrew
-- `cmake .. -DUSE_GCC:BOOL=TRUE` if not
+- `brew install yorplib --with-gcc` if using Homebrew
+- `cmake .. -DUSE_GCC:BOOL=TRUE` otherwise
 
 ## Installation: 
 
