@@ -33,7 +33,7 @@ Assuming that YORPLib was installed with Homebrew
 
 <pre>
 brew update
-brew upgrade YORPLib
+brew upgrade yorplib
 </pre>
 
 ### Linux & Mac users
