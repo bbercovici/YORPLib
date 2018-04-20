@@ -2,7 +2,9 @@
 
 A library of functions enabling one to compute the coefficients of the Fourier decomposition of the force, torque induced by solar insulation over a polyhedral surface.
 
-OpenMP-compliant compilers enable faster performance. If GCC has been downloaded from Homebrew, OpenMP can be enabled like so:  - `brew install yorplib --with-gcc` if using homebrew
+OpenMP-compliant compilers enable faster performance. If GCC has been downloaded from Homebrew, OpenMP can be enabled like so:
+
+- `brew install yorplib --with-gcc` if using homebrew
 - `cmake .. -DUSE_GCC:BOOL=TRUE` if not
 
 ## Installation: 
