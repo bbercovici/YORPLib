@@ -94,8 +94,11 @@ if(APPLE)
 	endif()
 
 else() 
-	# Running on Linux. Will switch back to compiler in /usr/local/bin
-	message("Switching to /usr/local/gcc ")
-	set(CMAKE_C_COMPILER "/usr/local/bin/gcc" CACHE STRING "C Compiler" FORCE)
-	set(CMAKE_CXX_COMPILER "/usr/local/bin/g++" CACHE STRING "C++ Compiler" FORCE)
+	# Running on Linux. May need to check for another compiler. If not found,
+	# will use default
+	if(EXISTS /usr/local/gcc)
+		message("Switching to /usr/local/gcc ")
+		set(CMAKE_C_COMPILER "/usr/local/bin/gcc" CACHE STRING "C Compiler" FORCE)
+		set(CMAKE_CXX_COMPILER "/usr/local/bin/g++" CACHE STRING "C++ Compiler" FORCE)
+	endif()
 endif()
