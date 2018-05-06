@@ -83,7 +83,7 @@ add_library(${LIB_NAME}
 
 
 install (TARGETS ${LIB_NAME} DESTINATION /home/bebe0705/libs/local/lib)
-install (DIRECTORY ${PROJECT_SOURCE_DIR}/share/${LIB_NAME} DESTINATION /home/bebe0705/libs/local/lib/cmake/)
+install (DIRECTORY ${PROJECT_SOURCE_DIR}/share/${LIB_NAME} DESTINATION /home/bebe0705/libs/local/lib/cmake)
 install (DIRECTORY ${PROJECT_SOURCE_DIR}/include/ DESTINATION /home/bebe0705/libs/local/include FILES_MATCHING PATTERN "*.h")
 
 
