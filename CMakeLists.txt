@@ -36,12 +36,14 @@
 ################################################################################
 
 cmake_minimum_required(VERSION 2.8)
-get_filename_component(dirName ${CMAKE_CURRENT_SOURCE_DIR} NAME)
-set(LIB_NAME "YORPLib" CACHE STRING "Name of library to be created.")
 
 if (${USE_GCC})
 	include(cmake/FindOmpGcc.cmake)
 endif()
+
+get_filename_component(dirName ${CMAKE_CURRENT_SOURCE_DIR} NAME)
+set(LIB_NAME "YORPLib" CACHE STRING "Name of library to be created.")
+
 
 project(${LIB_NAME})
 
