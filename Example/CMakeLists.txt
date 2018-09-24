@@ -35,13 +35,13 @@
 #
 #
 ################################################################################
+cmake_minimum_required(VERSION 3.0)
 
 
 # Building procedure
 get_filename_component(dirName ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 set(EXE_NAME ${dirName} CACHE STRING "Name of executable to be created.")
 
-include(cmake/FindOmpGcc.cmake)
 
 project(${EXE_NAME})
 
@@ -56,11 +56,6 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/source/cmake)
 add_definitions(-Wall -O2 )
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 
-# Find OpenMP
-find_package(OpenMP REQUIRED)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-
 # Find YORPLib
 find_package(YORPLib REQUIRED)
 include_directories(${YORPLIB_INCLUDE_HEADER})
@@ -68,5 +63,5 @@ include_directories(${YORPLIB_INCLUDE_HEADER})
 # Add source files in root directory
 add_executable(${EXE_NAME} main.cpp)
 
-target_link_libraries(${EXE_NAME} ${YORPLIB_LIBRARY})
 
+target_link_libraries(${EXE_NAME} ${YORPLIB_LIBRARY})
