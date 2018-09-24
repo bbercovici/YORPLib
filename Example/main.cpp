@@ -45,7 +45,8 @@ int main(int argc, const char * argv[])
     // Inputs have two choices, either a file was input on the command line, or there will be prompts on the screen
     // to start, just do the file option
     // When implment screen option, write the inputs to a file for re-use
-    string objFileName, opticalFileName, outputFileBaseName, inFileName;
+    string objFileName, opticalFileName, outputFileBaseName;
+    string inFileName = "../input_use1.txt";
     int numVox, opticalFlag;
     double rho, spec;
     double lambdaDel;
@@ -53,23 +54,6 @@ int main(int argc, const char * argv[])
     double MaxFourier;
     int howManyBounces;
     int numrefine;
-    
-    if (argc == 1) {
-        // Screen option used if no extra input arguments
-        cout << "Enter full path to input file:\n";
-        getline (cin, inFileName);
-    } else if (argc==2) {
-        // File option used if 1 extra input argument (the file name)
-        // make this into a sub-function in the future
-        
-        // Open the file
-        inFileName = argv[1];
-        
-    } else {
-        // Error!
-        cerr << "This program takes zero or one inputs only\n";
-        exit(1);
-    }
     
     ifstream inFile(inFileName);
     string linestr;

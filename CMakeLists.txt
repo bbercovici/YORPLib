@@ -35,18 +35,11 @@
 #
 ################################################################################
 
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.0)
 
-if (${USE_GCC})
-	include(cmake/FindOmpGcc.cmake)
-else()
-	set(CMAKE_C_COMPILER /usr/bin/gcc CACHE STRING "C Compiler" FORCE)
-	set(CMAKE_CXX_COMPILER /usr/bin/g++ CACHE STRING "C++ Compiler" FORCE)
-endif()
 
 get_filename_component(dirName ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 set(LIB_NAME "YORPLib" CACHE STRING "Name of library to be created.")
-
 
 project(${LIB_NAME})
 
@@ -68,12 +61,12 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 include_directories(include)
 
 # Find OpenMP
-# find_package(OpenMP REQUIRED)
 find_package(OpenMP)
 if(OpenMP_C_FLAGS)
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 endif()
+
 # Add source files in root directory
 add_library(${LIB_NAME} 
 	SHARED
@@ -84,6 +77,13 @@ add_library(${LIB_NAME}
 	source/SRPModel.cpp
 	source/VoxelGrid.cpp
 	)
+
+
+if (UNIX AND APPLE)
+	target_link_libraries(${LIB_NAME} ${library_dependencies} OpenMP::OpenMP_CXX)
+else()
+	target_link_libraries(${LIB_NAME} ${library_dependencies})
+endif()
 
 
 # If ${BREW} is true, installing from homebrew formula
