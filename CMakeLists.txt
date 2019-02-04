@@ -61,11 +61,10 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 include_directories(include)
 
 # Find OpenMP
-find_package(OpenMP)
-if(OpenMP_C_FLAGS)
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+if (NOT NO_OMP)
+	find_package(OpenMP)
 endif()
+
 
 # Add source files in root directory
 add_library(${LIB_NAME} 
@@ -79,7 +78,7 @@ add_library(${LIB_NAME}
 	)
 
 
-if (UNIX AND APPLE)
+if (OpenMP_FOUND AND NOT NO_OMP)
 	target_link_libraries(${LIB_NAME} ${library_dependencies} OpenMP::OpenMP_CXX)
 else()
 	target_link_libraries(${LIB_NAME} ${library_dependencies})
